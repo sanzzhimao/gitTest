@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        table{
+            margin: 0 auto;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        var pagenum=0;
+        function changePage(pn) {
+            $("#linkdiv").html("");
+            for (var i=0;i<pn;i++){
+                $("#linkdiv").append(" "+(i+1)+" ");
+            }
+        }
+        function sendAjax() {
+            var hobbiearr=new Array();
+            $("input[type='checkbox']").each(function () {
+                if ($(this).is(":checked")) {
+                    hobbiearr.push($(this).val());
+                    console.log($(this).val());
+                }
+            });
+            $.post(
+                'http://localhost:8888/ums/findservlet',
+                {userName:$("[name='userName']").val(),birthday:$("[name='birthday']").val(),hobbies:hobbiearr.join(","),pagesize:$("#pagesize").val()},
+                function (response,status,xhr) {
+                    $("#resultdiv").html("");
+                    var htmlcontent="";
+                    var jsonlength=response.length;
+                    if (jsonlength<=0){
+                        htmlcontent='<>'
+                    }
+                    htmlcontent += "<thead><tr><th>userName</th><th>birthday</th><th>hobbies</th></tr></thead><tbody>";
+                    for (var i=0;i<jsonlength;i++){
+                        if (i==jsonlength-1){
+                            changePage(response[i]);
+                        }else {
+                            console.log(response[i]);
+                            htmlcontent+='<tr><td>'+response[i].userName+'</td><td>'+response[i].birthday+'</td><td>'+response[i].hobbies+'</td></tr>';
+                        }
+                    }
+                    htmlcontent += '</tbody>';
+                    $("#resultdiv").append(htmlcontent);
+                }
+                ,'json');
+        }
+
+
+        function pageSizeReq() {
+            //拿到控件
+            var pageSize=document.getElementById("pagesize");
+            //拿到选中的项的索引
+            var index=pageSize.selectedIndex;
+            //拿到值
+            var val=pageSize.options[index].value;
+            //
+            $.post(
+
+            )
+            var form=document.getElementById("form1");
+            form.action="http://localhost:8888/user/findservlet?page=1&pagesize="+val;
+            form.submit();
+        }
+    </script>
+</head>
+<body>
+<h1>用户列表</h1>
+<hr>
+<form action="" method="post">
+    姓名：<input type="text" name="userName" id="userName">
+    生日：<input type="date" name="birthday" id="birthday">
+    爱好：<input type="checkbox" name="hobbies" value="r"/>阅读
+    <input type="checkbox" name="hobbies" value="s"/>游泳
+    <input type="checkbox" name="hobbies" value="m"/>音乐
+    <input type="checkbox" name="hobbies" value="g"/>游戏
+    <input type="button" value="查询用户" id="find" onclick="sendAjax()">
+    每页显示：<select name="pagesize" id="pagesize" onchange="sendAjax()">
+    <option value="3">3</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    </select>条信息
+</form>
+<table id="resultdiv">
+</table>
+<div id="linkdiv"></div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+
+            $("#find").click(function () {
+                var hobbiearr=new Array();
+                $("input[type='checkbox']").each(function () {
+                    if ($(this).is(":checked")) {
+                        hobbiearr.push($(this).val());
+                        console.log($(this).val());
+                    }
+                });
+                $.post(
+                    'http://localhost:8888/ums/findservlet',
+                    {userName:$("[name='userName']").val(),birthday:$("[name='birthday']").val(),hobbies:hobbiearr.join(",")},
+                    function (response,status,xhr) {
+                        $("#resultdiv").html("");
+                        var htmlcontent="";
+                        var jsonlength=response.length;
+                        htmlcontent += "<table><thead><tr><th>userName</th><th>birthday</th><th>hobbies</th></tr></thead><tbody>";
+                        for (var i=0;i<jsonlength;i++){
+                            console.log(response[i]);
+                            htmlcontent+='<tr><td>'+response[i].userName+'</td><td>'+response[i].birthday+'</td><td>'+response[i].hobbies+'</td></tr>'
+
+                        }
+                        htmlcontent += '</tbody></table>';
+                        $("#resultdiv").append(htmlcontent);
+
+                    }
+                ,'json');
+            });
+        })
+    </script>
+</head>
+<body>
+    <h1>查询</h1>
+    <hr>
+    <form action="" method="post">
+        姓名：<input type="text" name="userName" id="userName">
+        生日：<input type="date" name="birthday" id="birthday">
+        爱好：<input type="checkbox" name="hobbies" value="r"/>阅读
+        <input type="checkbox" name="hobbies" value="s"/>游泳
+        <input type="checkbox" name="hobbies" value="m"/>音乐
+        <input type="checkbox" name="hobbies" value="g"/>游戏
+        <input type="button" value="查询" id="find">
+    </form>
+    <div id="resultdiv">
+    </div>
+
+</body>
+</html>
