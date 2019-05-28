@@ -1,18 +1,16 @@
 package ums.web;
 
-import ums.service.IUserService;
-import ums.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet(name = "DelUsersServlet",urlPatterns = "/user/deluser")
-public class DelUsersServlet extends HttpServlet {
+@WebServlet(name = "LogOutServlet",urlPatterns = "/user/logout")
+public class LogOutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
@@ -20,12 +18,8 @@ public class DelUsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] usernamesStr=request.getParameterValues("userName");
-        IUserService us=new UserService();
-        try {
-            us.delUsers(usernamesStr);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        HttpSession session=request.getSession();
+        session.invalidate();
+        response.sendRedirect(request.getContextPath()+"/login.html");
     }
 }

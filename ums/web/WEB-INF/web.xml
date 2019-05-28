@@ -28,4 +28,7 @@
         <servlet-name>currentTimeServlet2</servlet-name>
         <url-pattern>/time2</url-pattern>
     </servlet-mapping>
+    <listener>
+        <listener-class>ums.listener.RequestTestListener</listener-class>
+    </listener>
 </web-app>

@@ -47,6 +47,7 @@ public class RegisterHtmlServlet extends HttpServlet {
      * @return cookie值
      */
     private String getCookieByName(HttpServletRequest request,String name){
+        Cookie cookie=new Cookie("name","hh");
         String value=null;
         //通过请求获得所有cookie
         Cookie[] cookies=request.getCookies();

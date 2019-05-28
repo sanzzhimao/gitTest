@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -28,6 +29,9 @@ public class CheckUsernameServlet extends HttpServlet {
                 pw.println("用户名已存在");
             }
             pw.close();
+            HttpSession session=request.getSession();
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

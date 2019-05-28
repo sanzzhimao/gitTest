@@ -36,8 +36,8 @@
     <h2 id="headerh1">用户管理系统</h2>
     <div>
         <ul>
-            <li><a href="<c:url value="/login.jsp"></c:url> ">Login</a></li>
-            <li><a href="<c:url value="/register.jsp"></c:url> ">register</a></li>
+            <li><a href="<c:url value="/login.html"></c:url> ">Login</a></li>
+            <li><a href="<c:url value="/register.html"></c:url> ">register</a></li>
             <li>3</li>
             <li>4</li>
         </ul>

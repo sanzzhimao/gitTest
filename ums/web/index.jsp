@@ -33,18 +33,23 @@
       其他
     </c:otherwise>
   </c:choose>
-  <c:import var="baidu" url="header.jsp"></c:import>
-  <c:out value="${baidu}"></c:out>
-  <a href="<c:url value="https://www.baidu.com">
-    <c:param name="param1" value="param1-v"></c:param>
-  </c:url> ">
-    点击跳转到百度
-  </a>
   <br>
+  <% for ( int i = 0 ; i < 3 ; i ++){ %>
+  out.print( i * 2);
+  <% } %>
   forEach迭代
   <c:forEach begin="1" end="10" step="2">
     forEach
   </c:forEach>
+  <% x=3; %>
+  <% int x=5; %>
+  <%! int x=7; %>
+  x = <%=x%>, <%=this.x%>
+  <%! int sum=1;%>
+  <% int sum=8;%>
+  <%out.println(sum++);%>
+
+
   <%--重定向--%>
   <%--<c:redirect url="login.html"></c:redirect>--%>
   </body>

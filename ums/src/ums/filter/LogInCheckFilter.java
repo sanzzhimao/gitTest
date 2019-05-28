@@ -27,8 +27,8 @@ public class LogInCheckFilter implements Filter {
             chain.doFilter(req, resp);
         }else {
             //未登录，回到登录页面
-            session.setAttribute("message","not login yer");
-            ((HttpServletResponse) resp).sendRedirect(request.getContextPath()+"/login.jsp");
+            session.setAttribute("message","not login yet");
+            ((HttpServletResponse) resp).sendRedirect(request.getContextPath()+"/login.html");
         }
 
 

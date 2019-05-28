@@ -59,7 +59,7 @@ public class UserListServlet extends HttpServlet {
             session.setAttribute("page",page);
             session.setAttribute("pagesize",pagesize);
 //            response.sendRedirect("viewusers");
-            response.sendRedirect(request.getContextPath()+"/user/userlist.html");
+            response.sendRedirect(request.getContextPath()+"/user/userlist.jsp");
 //        }else {
 //            //登陆失败
 //            response.sendRedirect("/ums/login.html");

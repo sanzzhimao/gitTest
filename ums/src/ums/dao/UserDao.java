@@ -179,7 +179,7 @@ public class UserDao implements IUserDao{
 
     @Override
     public void delUsers(String[] userNames) throws SQLException {
-        String sql="delete form web_user where username=?";
+        String sql="delete from  web_user where username=?";
         PreparedStatement pstmt=con.prepareStatement(sql);
         for (int i=0;i<userNames.length;i++){
             pstmt.setString(1,userNames[i]);
@@ -187,7 +187,6 @@ public class UserDao implements IUserDao{
             if (i%10==0){
                 pstmt.executeBatch();
             }
-
         }
         pstmt.executeBatch();
         JdbcUtil.release(null, pstmt, null);

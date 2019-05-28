@@ -36,18 +36,19 @@
                     var htmlcontent="";
                     var jsonlength=response.length;
                     if (jsonlength<=0){
-                        htmlcontent='<>'
-                    }
-                    htmlcontent += "<thead><tr><th>userName</th><th>birthday</th><th>hobbies</th></tr></thead><tbody>";
-                    for (var i=0;i<jsonlength;i++){
-                        if (i==jsonlength-1){
-                            changePage(response[i]);
-                        }else {
-                            console.log(response[i]);
-                            htmlcontent+='<tr><td>'+response[i].userName+'</td><td>'+response[i].birthday+'</td><td>'+response[i].hobbies+'</td></tr>';
+                        htmlcontent='未检索到相关数据';
+                    }else {
+                        htmlcontent += "<thead><tr><th>userName</th><th>birthday</th><th>hobbies</th></tr></thead><tbody>";
+                        for (var i=0;i<jsonlength;i++){
+                            if (i==jsonlength-1){
+                                changePage(response[i]);
+                            }else {
+                                console.log(response[i]);
+                                htmlcontent+='<tr><td>'+response[i].userName+'</td><td>'+response[i].birthday+'</td><td>'+response[i].hobbies+'</td></tr>';
+                            }
                         }
+                        htmlcontent += '</tbody>';
                     }
-                    htmlcontent += '</tbody>';
                     $("#resultdiv").append(htmlcontent);
                 }
                 ,'json');
@@ -61,10 +62,7 @@
             var index=pageSize.selectedIndex;
             //拿到值
             var val=pageSize.options[index].value;
-            //
-            $.post(
 
-            )
             var form=document.getElementById("form1");
             form.action="http://localhost:8888/user/findservlet?page=1&pagesize="+val;
             form.submit();
@@ -73,6 +71,7 @@
 </head>
 <body>
 <h1>用户列表</h1>
+<span>当前在线人数：<a>查看在线人数</a></span>
 <hr>
 <form action="" method="post">
     姓名：<input type="text" name="userName" id="userName">
@@ -91,6 +90,7 @@
 <table id="resultdiv">
 </table>
 <div id="linkdiv"></div>
+<a href="userlist.jsp">jsp页面</a>
 
 </body>
 </html>

@@ -17,12 +17,26 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script>
         function del() {
+            var params="";
             var form=document.getElementById("form1");
             var usernames=document.getElementsByName("userName");
             for (var i=0;i<usernames.length;i++){
-                usernames[i].valueOf();
+                if (usernames[i].checked==true){
+                    if (i==0){
+                        params+="userName="+usernames[i].value;
+                    } else {
+                        params+="&userName="+usernames[i].value;
+                    }
+                }
             }
-            form.action="<%=request.getContextPath()%>/user/delusers";
+            if (params!=null && params!=""){
+                form.action="<%=request.getContextPath()%>/user/deluser?"+params;
+                form.submit();
+            }else {
+                alert("未选择删除的学生");
+            }
+            alert(params);
+
         }
         function pageSizeReq() {
             //拿到控件
@@ -41,7 +55,7 @@
 <jsp:include page="../header.jsp"></jsp:include>
 <body>
 <h2>信息查询</h2>
-<p>${sessionScope.loginUser.userName} 登陆了</p>
+<p>${sessionScope.loginUser.userName} 登陆了，当前在线人数：${applicationScope.onlineUsers}<a href="<%=session.getServletContext().getContextPath()%>/user/onlineuserlist.jsp">查看更多信息</a><a href="<%=session.getServletContext().getContextPath()%>/user/logout">退出</a></p>
 <hr/>
 <%
     List<User> users=(List)session.getAttribute("users");
