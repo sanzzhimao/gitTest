@@ -26,10 +26,16 @@ public class FileUploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String savePath= request.getServletContext().getRealPath("/WEB-INF/");
+        String savePath= request.getServletContext().getRealPath("\\user\\images\\");
         Part part1=request.getPart("file");
-        System.out.println(part1.getName());
-        System.out.println(part1.getHeaderNames());
+        String filename=part1.getHeader("content-disposition");
+        String fname=setFileName(filename);
+//        System.out.println(part1.getName());
+//        System.out.println(part1.getHeaderNames());
+//        System.out.println(filename);
+        System.out.println(savePath+fname);
+        part1.write("E:"+File.separator+fname);
+
         Part part2=request.getPart("text");
         System.out.println(part2.getName());
         System.out.println(part2.getHeaderNames());
@@ -38,6 +44,10 @@ public class FileUploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
+    }
+    public String setFileName(String filename){
+        String fname=System.currentTimeMillis()+"."+filename.substring(filename.indexOf(".")+1);
+        return fname;
     }
 
 }
